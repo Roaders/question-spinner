@@ -1,7 +1,23 @@
 
 <button class="settings" (click)="showSettings()"><fa-icon [icon]="faCog" ></fa-icon></button>
 
-<div>
-    <p>spinner works!</p>
+<div class="d-flex h-100">
+
+    <div class="answeredQuestions" *ngIf="answeredQuestions.length > 0">
+        <h4>Answered Questions:</h4>
+
+        <ul>
+            <li *ngFor="let question of answeredQuestions">
+                {{question.text}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="flex-grow-1 h-100 d-flex justify-content-center align-items-center">
+
+        <h4 *ngIf="!hasQuestions">No Questions!</h4>
+
+    </div>
+
 </div>
 
