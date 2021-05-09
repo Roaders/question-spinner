@@ -1,15 +1,57 @@
-
 <div class="container">
     <h1>Settings</h1>
 
     <form>
+        <!-- Timeout -->
         <div class="form-group">
             <label for="timeoutInput">Question Timeout</label>
-            <input type="number" [(ngModel)]="timeout" class="form-control col-sm-3" id="timeoutInput" aria-describedby="timeoutHelp" name="timeout">
+            <input type="number" [(ngModel)]="timeout" class="form-control col-sm-3" id="timeoutInput"
+                aria-describedby="timeoutHelp" name="timeout">
             <small id="timeoutHelp" class="form-text text-muted">Enter timeout in seconds</small>
         </div>
 
-        <button type="button" [disabled]="!formDirty" class="btn btn-primary" (click)="save()">Save</button>
+        <!-- Questions -->
+        <div class="form-group" *ngFor="let question of editedQuestions; let i = index">
+            <label for="questionInput_{{i}}">Question {{i + 1}}</label>
+            <div class="input-group">
+                <input type="text" [(ngModel)]="editedQuestions[i].text" class="form-control" id="questionInput_{{i}}"
+                    (keyup)="onQuestionKeyUp($event)" name="questionInput_{{i}}">
+                <div class="input-group-append">
+                    <button (click)="deleteQuestion(question)" class="btn btn-danger" type="button">Delete</button>
+                </div>
+            </div>
+            <div>
+                <div class="form-check d-inline m-2">
+                    <input type="checkbox" [(ngModel)]="editedQuestions[i].enabled" class="form-check-input" id="enabled_{{i}}" name="enabled_{{i}}">
+                    <label class="form-check-label" for="enabled_{{i}}">Enabled</label>
+                </div>
+                <div class="form-check d-inline m-2">
+                    <input type="checkbox" [(ngModel)]="editedQuestions[i].answered" class="form-check-input" id="answered_{{i}}" name="answered_{{i}}">
+                    <label class="form-check-label" for="answered_{{i}}">Answered</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Question -->
+
+        <div class="form-group">
+            <label for="newQuestionInput">Add New Question</label>
+            <div class="input-group">
+                <input type="text" [(ngModel)]="newQuestionText" class="form-control" id="newQuestionInput"
+                    (keyup)="onQuestionKeyUp($event)" name="newQuestion">
+                <div class="input-group-append">
+                    <button [disabled]="!canAddQuestion" (click)="addQuestion()" class="btn btn-secondary"
+                        type="button">Add</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Save Button -->
+
+        <div class="d-flex justify-content-between">
+            <button type="button" [disabled]="!canSave" class="btn btn-primary" (click)="save()">Save</button>
+            <button type="button" class="btn btn-primary" (click)="returnToSpinner()">Return to Spinner</button>
+        </div>
     </form>
 
 </div>

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SETTINGS_KEY } from '../constants';
-
-export type SavedData = { timeout: number };
+import { SavedData } from '../contracts';
 
 @Injectable()
 export class SavedDataService {

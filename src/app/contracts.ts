@@ -1,1 +1,7 @@
-export type SavedData = { timeout: number };
+export type Question = {
+    text: string;
+    enabled: boolean;
+    answered: boolean;
+};
+
+export type SavedData = { timeout: number; questions: Question[] };
