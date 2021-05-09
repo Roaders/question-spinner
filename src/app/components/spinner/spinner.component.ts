@@ -30,6 +30,10 @@ export class SpinnerComponent {
         return this._savedData.questions.length > 0;
     }
 
+    public get canSpin(): boolean {
+        return this.hasQuestions;
+    }
+
     public showSettings(): void {
         this.router.navigate(['settings']);
     }
