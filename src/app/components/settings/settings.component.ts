@@ -68,7 +68,7 @@ export class SettingsComponent {
             return;
         }
 
-        this.questions.push({ text: this.newQuestionText, answered: false, enabled: true });
+        this.editedQuestions.push({ text: this.newQuestionText, answered: false, enabled: true });
         this._formDirty = true;
 
         this.newQuestionText = undefined;
@@ -81,7 +81,18 @@ export class SettingsComponent {
         }
 
         this._questions.splice(index, 1);
+        this.editedQuestions.splice(index, 1);
         this._formDirty = true;
+    }
+
+    public deleteAll(): void {
+        this._questions = [];
+        this.editedQuestions = [];
+        this._formDirty = true;
+    }
+
+    public reset(): void {
+        this.editedQuestions.forEach((question) => (question.answered = false));
     }
 
     public save(): void {
