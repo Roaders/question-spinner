@@ -4,13 +4,17 @@ import { SavedData } from '../contracts';
 
 @Injectable()
 export class SavedDataService {
-    public loadData(): SavedData | null {
-        const savedData = window.localStorage.getItem(SETTINGS_KEY);
+    public loadData(): SavedData {
+        const partialSavedData: Partial<SavedData> = JSON.parse(window.localStorage.getItem(SETTINGS_KEY) || '{}');
 
-        return savedData == null ? null : JSON.parse(savedData);
+        return { ...this.getDefault(), ...partialSavedData };
     }
 
     public saveData(data: SavedData): void {
         window.localStorage.setItem(SETTINGS_KEY, JSON.stringify(data));
+    }
+
+    private getDefault(): SavedData {
+        return { timeout: 60 * 7, questions: [], spinDuration: 3 };
     }
 }

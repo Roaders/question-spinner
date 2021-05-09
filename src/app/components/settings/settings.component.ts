@@ -14,8 +14,9 @@ const newQuestionRegExp = /\w/;
 export class SettingsComponent {
     constructor(private saveDataService: SavedDataService, private router: Router) {
         const savedData = saveDataService.loadData();
-        this._timeout = savedData?.timeout || 300;
-        this._questions = savedData?.questions || [];
+        this._timeout = savedData.timeout;
+        this._spinDuration = savedData.spinDuration;
+        this._questions = savedData.questions;
         this.editedQuestions = this.questions.map(cloneQuestion);
 
         console.log(this.editedQuestions);
@@ -41,6 +42,20 @@ export class SettingsComponent {
         return (
             this._formDirty || this.editedQuestions.some((question, index) => this.isQuestionEdited(question, index))
         );
+    }
+
+    private _spinDuration: number;
+
+    public get spinDuration(): number {
+        return this._spinDuration;
+    }
+
+    public set spinDuration(value: number) {
+        if (this._spinDuration === value) {
+            return;
+        }
+        this._spinDuration = value;
+        this._formDirty = true;
     }
 
     private _timeout: number;
@@ -110,7 +125,7 @@ export class SettingsComponent {
     }
 
     private buildSaveData(): SavedData {
-        return { timeout: this._timeout, questions: this.editedQuestions };
+        return { timeout: this._timeout, questions: this.editedQuestions, spinDuration: this._spinDuration };
     }
 
     private isQuestionEdited(question: Question, index: number): boolean {

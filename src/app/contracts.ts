@@ -4,4 +4,4 @@ export type Question = {
     answered: boolean;
 };
 
-export type SavedData = { timeout: number; questions: Question[] };
+export type SavedData = { timeout: number; spinDuration: number; questions: Question[] };

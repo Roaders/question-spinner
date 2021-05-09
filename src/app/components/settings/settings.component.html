@@ -10,6 +10,14 @@
             <small id="timeoutHelp" class="form-text text-muted">Enter timeout in seconds</small>
         </div>
 
+        <!-- Spin Duration -->
+        <div class="form-group">
+            <label for="spinDurationInput">Spin Duration</label>
+            <input type="number" [(ngModel)]="spinDuration" class="form-control col-sm-3" id="spinDurationInput"
+                aria-describedby="spinDurationHelp" name="spinDuration">
+            <small id="spinDurationHelp" class="form-text text-muted">Enter duration in seconds</small>
+        </div>
+
         <!-- Questions -->
         <div class="form-group" *ngFor="let question of editedQuestions; let i = index">
             <label for="questionInput_{{i}}">Question {{i + 1}}</label>
