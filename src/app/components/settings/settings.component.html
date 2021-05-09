@@ -1,1 +1,15 @@
-<p>settings works!</p>
+
+<div class="container">
+    <h1>Settings</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="timeoutInput">Question Timeout</label>
+            <input type="number" [(ngModel)]="timeout" class="form-control col-sm-3" id="timeoutInput" aria-describedby="timeoutHelp" name="timeout">
+            <small id="timeoutHelp" class="form-text text-muted">Enter timeout in seconds</small>
+        </div>
+
+        <button type="button" [disabled]="!formDirty" class="btn btn-primary" (click)="save()">Save</button>
+    </form>
+
+</div>
