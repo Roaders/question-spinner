@@ -8,7 +8,18 @@
 }
 
 .answeredQuestions {
-    max-width: 16rem;
     min-height: 0px;
     overflow: auto;
+
+    ul {
+        width: 16rem;
+    }
+}
+
+.questionText {
+    font-size: 8rem;
+}
+
+.remainingTime {
+    font-size: 4rem;
 }

@@ -17,9 +17,18 @@
 
         <h4 *ngIf="!hasQuestions">No Questions!</h4>
 
-        <button *ngIf="canSpin" class="btn btn-primary btn-lg">Spin</button>
+        <div class="d-flex flex-column align-items-center">
+            <div *ngIf="state === 'complete'" class="alert alert-danger">Time's Up</div>
 
+            <div *ngIf="question != null" class="d-flex">
+                <div class="questionText">{{question.text}}</div>
+            </div>
+    
+            <div class="remainingTime" *ngIf="state === 'running'">{{remainingTime}}</div>
+
+            <button *ngIf="state === 'start'" (click)="startTimer()" class="btn btn-primary btn-lg">Start</button>
+            <button *ngIf="state === 'spin' || state === 'complete'" (click)="startSpin()" class="btn btn-primary btn-lg">Spin</button>
+        </div>
     </div>
-
 </div>
 
