@@ -10,16 +10,19 @@
 .answeredQuestions {
     min-height: 0px;
     overflow: auto;
-
-    ul {
-        width: 16rem;
-    }
+    width: 300px;
 }
 
 .questionText {
     font-size: 8rem;
+    text-align: center;
 }
 
 .remainingTime {
     font-size: 4rem;
+}
+
+.alert {
+    font-weight: 400;
+    font-size: 6rem;
 }

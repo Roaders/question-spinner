@@ -5,7 +5,7 @@ import { Question, SavedData } from '../../contracts';
 import { SavedDataService } from '../../services';
 import { easing } from 'ts-easing';
 import { MAX_INTERVAL, MIN_INTERVAL } from 'src/app/constants';
-import { fromMs } from 'hh-mm-ss';
+import { fromS } from 'hh-mm-ss';
 
 type State = 'spin' | 'spinning' | 'start' | 'running' | 'complete';
 
@@ -50,7 +50,7 @@ export class SpinnerComponent {
     }
 
     public get hasQuestions(): boolean {
-        return this._savedData.questions.length > 0;
+        return this.filterAvailableQuestion().length > 0;
     }
 
     public showSettings(): void {
@@ -61,6 +61,10 @@ export class SpinnerComponent {
     private _timeout: number | undefined;
 
     public startSpin(): void {
+        if (this.filterAvailableQuestion().length < 2) {
+            this.selectQuestion();
+            return;
+        }
         this._spinStart = Date.now();
 
         this._state = 'spinning';
@@ -99,10 +103,10 @@ export class SpinnerComponent {
             throw new Error(`Question start time is undefined`);
         }
 
-        const elapsed = Date.now() - this._questionStart;
-        const remaining = this._savedData.timeout * 1000 - elapsed;
+        const elapsed = Math.round((Date.now() - this._questionStart) / 1000);
+        const remaining = this._savedData.timeout - elapsed;
 
-        this._remainingTime = fromMs(remaining);
+        this._remainingTime = fromS(remaining);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this._timeout = setTimeout(() => this.updateRemainingTime(), 100) as any; // to avoid issues with node types
@@ -144,10 +148,12 @@ export class SpinnerComponent {
         this._timeout = setTimeout(() => this.spin(), interval) as any; // to avoid issues with node types
     }
 
+    private filterAvailableQuestion() {
+        return this._savedData.questions.filter((question) => !question.answered && question.enabled);
+    }
+
     private pickRandomQuestion(): { question: Question; index: number } {
-        const availableQuestions = this._savedData.questions.filter(
-            (question) => !question.answered && question.enabled
-        );
+        const availableQuestions = this.filterAvailableQuestion();
 
         const index = Math.floor(Math.random() * availableQuestions.length);
         const question = availableQuestions[index];

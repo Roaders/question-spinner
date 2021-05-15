@@ -3,7 +3,7 @@
 
 <div class="d-flex h-100">
 
-    <div class="answeredQuestions" *ngIf="answeredQuestions.length > 0">
+    <div class="answeredQuestions flex-shrink-0" *ngIf="answeredQuestions.length > 0">
         <h4>Answered Questions:</h4>
 
         <ul>
@@ -15,8 +15,6 @@
 
     <div class="flex-grow-1 h-100 d-flex justify-content-center align-items-center">
 
-        <h4 *ngIf="!hasQuestions">No Questions!</h4>
-
         <div class="d-flex flex-column align-items-center">
             <div *ngIf="state === 'complete'" class="alert alert-danger">Time's Up</div>
 
@@ -27,8 +25,11 @@
             <div class="remainingTime" *ngIf="state === 'running'">{{remainingTime}}</div>
 
             <button *ngIf="state === 'start'" (click)="startTimer()" class="btn btn-primary btn-lg">Start</button>
-            <button *ngIf="state === 'spin' || state === 'complete'" (click)="startSpin()" class="btn btn-primary btn-lg">Spin</button>
+            <button *ngIf="hasQuestions && (state === 'spin' || state === 'complete')" (click)="startSpin()" class="btn btn-primary btn-lg">Spin</button>
+            
+            <h4 *ngIf="!hasQuestions && (state === 'spin' || state === 'complete')">No Questions!</h4>
         </div>
+
     </div>
 </div>
 
