@@ -90,12 +90,12 @@ export class SettingsComponent {
     }
 
     public deleteQuestion(question: Question): void {
-        const index = this._questions.indexOf(question);
+        const index = this.editedQuestions.indexOf(question);
         if (index < 0) {
+            console.warn(`Could not find question in array, not removing`);
             return;
         }
 
-        this._questions.splice(index, 1);
         this.editedQuestions.splice(index, 1);
         this._formDirty = true;
     }
